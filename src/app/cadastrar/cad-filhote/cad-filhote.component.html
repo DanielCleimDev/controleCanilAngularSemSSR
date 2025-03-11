@@ -1,0 +1,127 @@
+<h1>{{ninhada.mae}}</h1>
+
+
+  <form [formGroup]="formFilhote" class="row m-1">
+    <div class="form-group col-sm-6">
+      <label for="filhote_nome">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        id="filhote_nome"
+        name="filhote_nome"
+        placeholder="Nome do filhote"
+        formControlName="nome"
+        required
+      />
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="filhote_mae">Mãe: {{ninhada.mae}}</label>
+      <input
+        type="text"
+        class="form-control"
+        id="filhote_mae"
+        name="filhote_mae"
+        [placeholder]="ninhada.mae"
+        [value]="ninhada.mae"
+        formControlName="mae"
+      />
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="filhote_pai">Pai: {{ninhada.pai}}</label>
+      <input
+        type="text"
+        class="form-control"
+        id="filhote_pai"
+        name="filhote_pai"
+        [placeholder]="ninhada.pai"
+        [value]="ninhada.pai"
+        formControlName="pai"
+      />
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="filhote_canil_origem">Canil Origem</label>
+      <input
+        type="text"
+        class="form-control"
+        id="filhote_canil_origem"
+        name="filhote_canil_origem"
+        placeholder="Nome do Canil de Origem"
+        formControlName="canilOrigem"
+      />
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="filhote_cor">Cor</label>
+      <input
+        type="text"
+        class="form-control"
+        id="filhote_cor"
+        name="filhote_cor"
+        placeholder="Cor"
+        formControlName="cor"
+      />
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="filhote_raca">Raça</label>
+      <select
+        class="custom-select mr-sm-2"
+        id="filhote_raca"
+        name="filhote_raca"
+        required
+        
+        formControlName="raca"
+      >
+        <option selected>Selecione a raça</option>
+        <option value="Spitz">Spitz</option>
+        <option value="Shitzu">Shitzu</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-4">
+      <label for="filhote_Sexo">Sexo</label>
+      <select
+        class="custom-select mr-sm-2"
+        id="filhote_sexo"
+        name="filhote_sexo"
+        required
+        
+        formControlName="sexo"
+        (change)="onSexoChange($event)"
+      >
+      
+        <option selected>Selecione o Sexo</option>
+        <option value="Macho">Macho</option>
+        <option value="Fêmea">Fêmea</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-6" id="div_filhote_status" *ngIf="sexoSelecionado === 'Fêmea'">
+      <label for="filhote_status">Status</label>
+      <select
+        class="custom-select mr-sm-2"
+        id="filhote_status"
+        name="filhote_status"
+        required
+        
+        formControlName="status"
+      >
+        <option selected>Selecione o Status</option>
+        <option value="Filhote">Filhote</option>
+        <option value="Aguardando Cio">Aguardando Cio</option>
+        <option value="Cruzando">Cruzando</option>
+        <option value="Gravida">Grávida</option>
+        <option value="Com Filhote">Com Filhote</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-6">
+      <label for="filhote_data_nascimento">Data de Nascimento</label>
+      <input
+        type="date"
+        class="form-control"
+        id="filhote_data_nascimento"
+        name="filhote_data_nascimento"
+        [value]="ninhada.dataNascimento"
+        formControlName="dataNascimento"
+      />
+    </div>
+  </form>
+  <div class="form-group col-sm-12">
+    <button id="filhote_salvar" class="btn btn-primary" (click)="salvar()">Salvar</button>
+  </div>

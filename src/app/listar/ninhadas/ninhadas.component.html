@@ -1,0 +1,112 @@
+<span *ngIf="ninhadas.length == 0" class="loader"></span>
+<div class="row m-2">
+  <div class="col-md-3" *ngFor="let ninhada of  ninhadas;">
+    <div class="card mb-3">
+      <h5 class="card-header">{{ninhada.mae}} com {{ninhada.pai}}</h5>
+      <div class="card-body">
+        <p class="card-text">Data {{ninhada.dataNascimento | date:'dd/MM/yy'}}</p>
+        <p class="card-text">Quantidade de Femeas {{ninhada.qtdFemea}}</p>
+        <p class="card-text">Quantidade de Machos {{ninhada.qtdMacho}}</p>
+        <button class="btn btn-danger m-1" type="button" (click)="deletar(ninhada.id)">Deletar</button>
+        <button class="btn btn-primary m-1" (click)="abrirModalEditar(ninhada)">Editar</button>
+        <button class="btn btn-primary" (click)="cadastrarFilhote(ninhada)">Cadastrar Filhote</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Editar-->
+<div class="modal" tabindex="-1" role="dialog" id="modalEditar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Cruza</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <form [formGroup]="formNinhada">
+            <div class="form-group row m-2">
+              <input
+                  type="text"
+                  formControlName="id"
+                  hidden
+                />
+              <div class="form-group col-sm-6">
+                <label for="ninhada_mae">Mãe</label>
+                <select
+                  class="custom-select mr-sm-2"
+                  id="ninhada_mae"
+                  name="ninhada_mae"
+                  formControlName="mae"
+                  required
+                >
+                <option selected>Nome...</option>
+                <option *ngFor="let cadela of cadelas;" [value]="cadela">{{ cadela }}</option>
+                </select>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="ninhada_pai">Pai</label>
+                <select
+                  class="custom-select mr-sm-2"
+                  id="ninhada_pai"
+                  name="ninhada_pai"
+                  formControlName="pai"
+                  required
+                >
+                <option selected>Nome...</option>
+                <option *ngFor="let macho of machos;" [value]="macho">{{ macho }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <label for="ninhada_qtdMacho">Quantidade de Macho</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="ninhada_qtdMacho"
+                  name="ninhada_qtdMacho"
+                  formControlName="qtdMacho"
+                  required
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="ninhada_qtdFemea">Quantidade de Fêmea</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="ninhada_qtdFemea"
+                  name="ninhada_qtdFemea"
+                  formControlName="qtdFemea"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <label for="ninhada_data_nascimento">Data do Parto</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [max]="hoje | date:'yyyy-MM-dd'"
+                  id="ninhada_data_nascimento"
+                  name="ninhada_data_nascimento"
+                  formControlName="dataNascimento"
+                />
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <button type="button" class="btn btn-primary" (click)="editar()">Salvar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fim Modal Editar-->
+

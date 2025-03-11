@@ -1,0 +1,87 @@
+
+<span *ngIf="cruzas.length == 0" class="loader"></span>
+<div class="row m-1">
+  <div class="col-md-3 " *ngFor="let cruza of  cruzas;">
+    <div class="card mb-2">
+      <h5 class="card-header">{{cruza.femea}} com {{cruza.macho}}</h5>
+      <div class="card-body">
+        <p class="card-text">Data {{cruza.data | date:'dd/MM/yy'}}</p>
+        <button class="btn btn-danger m-1" type="button" (click)="deletar(cruza.id)">Deletar</button>
+        <button class="btn btn-primary m-1" (click)="abrirModalEditar(cruza)">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Editar-->
+<div class="modal" tabindex="-1" role="dialog" id="modalEditar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Cruza</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <form [formGroup]="formCruza">
+            <div class="form-group row m-2">
+              <input
+                  type="text"
+                  formControlName="id"
+                  hidden
+                />
+              <div class="form-group col-sm-5">
+                <label for="cruza_femea">Nome da Fêmea</label>
+                <select
+                  class="custom-select mr-sm-2"
+                  id="cruza_femea"
+                  name="cruza_femea"
+                  required
+                  formControlName="femea"
+                >
+                <option selected>Fêmea...</option>
+                <option *ngFor="let cadela of cadelas;" [value]="cadela">{{ cadela }}</option>
+                </select>
+              </div>
+              <div class="form-group col-sm-5">
+                <label for="cruza_macho">Nome do Macho</label>
+                  <select
+                    class="custom-select mr-sm-2"
+                    id="cruza_macho"
+                    name="cruza_macho"
+                    required
+                    formControlName="macho"
+                  >
+                    <option selected>Macho...</option>
+                    <option *ngFor="let macho of machos;" [value]="macho">{{ macho }}</option>
+                  </select>
+                </div>
+              </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-5">
+                <label for="cruza_data">Data</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="cruza_data"
+                  name="cruza_data"
+                  required
+                  formControlName="data"
+                />
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <button type="button" class="btn btn-primary" (click)="editar()">Salvar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fim Modal Editar-->
+
+

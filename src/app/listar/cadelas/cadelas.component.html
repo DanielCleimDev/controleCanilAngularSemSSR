@@ -1,0 +1,230 @@
+
+<span *ngIf="cadelas.length == 0" class="loader"></span>
+
+<div class="container" *ngIf="cadelas.length>0 && mostrarBotoes">
+  <button class="btn btn-primary m-1" (click)="selecionarCadelas('Filhote')" *ngIf="cadelasFilhote.length>0">
+    Filhote qtd: {{cadelasFilhote.length}}
+  </button>
+  <button class="btn btn-primary m-1" (click)="selecionarCadelas('Aguardando Cio')" *ngIf="cadelasAguardandoCio.length>0">
+    Aguardando Cio qtd: {{cadelasAguardandoCio.length}}
+  </button>
+  <button class="btn btn-primary m-1" (click)="selecionarCadelas('Cruzando')" *ngIf="cadelasCruzando.length>0">
+    Cruzando qtd: {{cadelasCruzando.length}}
+  </button>
+  <button class="btn btn-primary m-1" (click)="selecionarCadelas('Gravida')" *ngIf="cadelasGravida.length>0">
+    Gravida qtd: {{cadelasGravida.length}}
+  </button>
+  <button class="btn btn-primary m-1" (click)="selecionarCadelas('Com Filhote')" *ngIf="cadelasComFilhote.length>0">
+    Com Filhote qtd: {{cadelasComFilhote.length}}
+  </button>
+</div>
+<div *ngIf="!mostrarBotoes">
+  <div class="container"><button class="btn btn-primary m-1" (click)="voltar()">Voltar</button> </div>
+  <div class="container"><span *ngIf="cadelaSelecao.length == 0" class="loader"></span></div>
+  <div *ngIf="cadelasSelecionada.length > 0">
+    <div class="row">
+      <div class="col-lg-3" *ngFor="let cadela of cadelasSelecionada;">
+        <div class="card m-2">
+          <h5 class="card-header">{{cadela.nome}} - {{calcularIdade(cadela)}}</h5>
+          <div class="card-body">
+            <p class="card-text">Canil: {{cadela.canilOrigem}}</p>
+            <p class="card-text">Data de Nascimento: {{cadela.dataNascimento | date:'dd/MM/yy'}}</p>
+            <p class="card-text">Pai: {{cadela.pai}}</p>
+            <p class="card-text">Mãe: {{cadela.mae}}</p>
+            <p class="card-text">Cor: {{cadela.cor}}</p>
+            <p class="card-text">Raça: {{cadela.raca}}</p>
+            <p class="card-text">Status: {{cadela.status}}</p>
+            
+            <div class="d-flex flex-wrap">
+              <button class="btn btn-danger m-1" type="button" (click)="deletar(cadela.id)">Deletar</button>
+              <button type="button" class="btn btn-primary m-1" (click)="abrirModalEditar(cadela)">Editar</button>
+              <button class="btn btn-primary m-1" (click)="abrirModalAlterarStatus(cadela)">Alterar Status</button>
+            </div>
+  
+            <!--Modal Alterar Status-->
+            <div class="modal fade" 
+              [id]="'alterarStatus' + cadela.id" 
+              tabindex="-1" 
+              role="dialog" 
+              [attr.aria-labelledby]="'TituloAlterarStatus' + cadela.id" 
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" [id]="'TituloAlterarStatus' + cadela.id" >Alterar Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="formCadela">
+                      <div class="form-group col-sm-6">
+                        <label for="cadela_status">Status da {{cadela.nome}}</label>
+                        <select
+                          class="custom-select mr-sm-2"
+                          
+                          name="cadela_status"
+                          [value]="cadela.status"
+                          required
+                          formControlName="status"
+                        >
+                          <option value="Filhote">Filhote</option>
+                          <option value="Aguardando Cio">Aguardando Cio</option>
+                          <!--<option value="Cio">Cio</option>-->
+                          <option value="Cruzando">Cruzando</option>
+                          <option value="Gravida">Grávida</option>
+                          <option value="Com Filhote">Com Filhote</option>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" (click)="alterarStatus(cadela)">Salvar Alteração</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Fim Modal Alterar Status-->
+  
+            <!--Modal Editar-->
+            <div class="modal fade" [id]="'EditarCadela' + cadela.id" tabindex="-1" role="dialog" [attr.aria-labelledby]="'TituloEditarCadela' + cadela.id" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" [id]="'TituloEditarCadela' + cadela.id">Editar {{cadela.nome}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-body">
+                      <form [formGroup]="formCadela">
+                        <div class="form-group row m-2">
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_nome">Nome da Cadela</label>
+                            <input
+                              type="text"
+                              class="form-control"
+  
+                              name="cadela_nome"
+                              placeholder="Nome da Cadela"
+                              [value]="cadela.nome"
+                              required
+                              formControlName="nome"
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_mae">Mãe</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              
+                              name="cadela_mae"
+                              [value]="cadela.mae"
+                              placeholder="Mãe"
+                              formControlName="mae"
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_pai">Pai</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              
+                              name="cadela_pai"
+                              [value]="cadela.pai"
+                              placeholder="Pai"
+                              formControlName="pai"
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_canil_origem">Canil Origem</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              
+                              name="cadela_canil_origem"
+                              [value]="cadela.canilOrigem"
+                              placeholder="Nome do Canil de Origem"
+                              formControlName="canilOrigem"
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_cor">Cor</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              
+                              name="cadela_cor"
+                              [value]="cadela.cor"
+                              placeholder="Cor"
+                              formControlName="cor"
+                            />
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_raca">Raça</label>
+                            <select
+                              class="custom-select mr-sm-2"
+                              
+                              name="cadela_raca"
+                              [value]="cadela.raca"
+                              required
+                              formControlName="raca"
+                            >
+                              <option selected>Selecione a Raça</option>
+                              <option value="Spitz">Spitz</option>
+                              <option value="Shitzu">Shitzu</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_status">Status</label>
+                            <select
+                              class="custom-select mr-sm-2"
+                              
+                              name="cadela_status"
+                              [value]="cadela.status"
+                              required
+                              formControlName="status"
+                            >
+                              <option selected>Status</option>
+                              <option value="Filhote">Filhote</option>
+                              <option value="Aguardando Cio">Aguardando Cio</option>
+                              <!--<option value="Cio">Cio</option>-->
+                              <option value="Cruzando">Cruzando</option>
+                              <option value="Gravida">Grávida</option>
+                              <option value="Com Filhote">Com Filhote</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="cadela_data_nascimento">Data de Nascimento</label>
+                            <input
+                              type="date"
+                              class="form-control"
+                              [max]="hoje | date:'yyyy-MM-dd'"
+                              
+                              name="cadela_data_nascimento"
+                              [value]="cadela.dataNascimento"
+                              formControlName="dataNascimento"
+                            />
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editar(cadela)">Salvar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Fim Modal Editar-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="card-body">
+  <form [formGroup]="formCruza">
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-5">
+        <label for="cruza_femea">Nome da Fêmea</label>
+        <select
+          class="custom-select mr-sm-2"
+          id="cruza_femea"
+          name="cruza_femea"
+          required
+          formControlName="femea"
+        >
+        <option selected>Fêmea...</option>
+        <option *ngFor="let cadela of cadelas;" [value]="cadela">{{ cadela }}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-5">
+        <label for="cruza_macho">Nome do Macho</label>
+          <select
+            class="custom-select mr-sm-2"
+            id="cruza_macho"
+            name="cruza_macho"
+            required
+            formControlName="macho"
+          >
+            <option selected>Macho...</option>
+            <option *ngFor="let macho of machos;" [value]="macho">{{ macho }}</option>
+          </select>
+        </div>
+      </div>
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-5">
+        <label for="cruza_data">Data</label>
+        <input
+          type="date"
+          class="form-control"
+          id="cruza_data"
+          name="cruza_data"
+          required
+          formControlName="data"
+        />
+      </div>
+    </div>
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-6">
+        <button type="button" class="btn btn-primary" (click)="salvar()">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>

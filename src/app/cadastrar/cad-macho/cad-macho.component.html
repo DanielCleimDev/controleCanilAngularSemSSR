@@ -1,0 +1,95 @@
+<div class="card-body">
+  <form [formGroup]="formMacho">
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-6">
+        <label for="macho_nome">Nome do Macho</label>
+        <input
+          type="text"
+          class="form-control"
+          id="macho_nome"
+          name="macho_nome"
+          placeholder="Nome do Macho"
+          required
+          formControlName="nome"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="macho_mae">Mãe</label>
+        <input
+          type="text"
+          class="form-control"
+          id="macho_mae"
+          name="macho_mae"
+          placeholder="Mãe"
+          formControlName="mae"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="macho_pai">Pai</label>
+        <input
+          type="text"
+          class="form-control"
+          id="macho_pai"
+          name="macho_pai"
+          placeholder="Pai"
+          formControlName="pai"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="macho_canil_origem">Canil Origem</label>
+        <input
+          type="text"
+          class="form-control"
+          id="macho_canil_origem"
+          name="macho_canil_origem"
+          placeholder="Nome do Canil de Origem"
+          formControlName="canilOrigem"
+        />
+      </div>
+    </div>
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-6">
+        <label for="macho_cor">Cor</label>
+        <input
+          type="text"
+          class="form-control"
+          id="macho_cor"
+          name="macho_cor"
+          placeholder="Cor"
+          formControlName="cor"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="macho_raca">Raça</label>
+        <select
+          class="custom-select mr-sm-2"
+          id="macho_raca"
+          name="macho_raca"
+          required
+          formControlName="raca"
+        >
+          <option selected>Selecione a Raça...</option>
+          <option value="Spitz">Spitz</option>
+          <option value="Shitzu">Shitzu</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-6">
+        <label for="macho_data_nascimento">Data de Nascimento</label>
+        <input
+          type="date"
+          class="form-control"
+          id="macho_data_nascimento"
+          name="macho_data_nascimento"
+          formControlName="dataNascimento"
+        />
+      </div>
+    </div>
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-6">
+        <button type="button" class="btn btn-primary" (click)="salvar()">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>

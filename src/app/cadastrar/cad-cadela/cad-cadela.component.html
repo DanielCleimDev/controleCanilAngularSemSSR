@@ -1,0 +1,109 @@
+
+<div class="card-body">
+  <form [formGroup]="formCadela">
+    <div class="form-group row m-2">
+      <div class="form-group col-sm-6">
+        <label for="cadela_nome">Nome da Cadela</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cadela_nome"
+          name="cadela_nome"
+          placeholder="Nome da Cadela"
+          required
+          formControlName="nome"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_mae">Mãe</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cadela_mae"
+          name="cadela_mae"
+          placeholder="Mãe"
+          formControlName="mae"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_pai">Pai</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cadela_pai"
+          name="cadela_pai"
+          placeholder="Pai"
+          formControlName="pai"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_canil_origem">Canil Origem</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cadela_canil_origem"
+          name="cadela_canil_origem"
+          placeholder="Nome do Canil de Origem"
+          formControlName="canilOrigem"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_cor">Cor</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cadela_cor"
+          name="cadela_cor"
+          placeholder="Cor"
+          formControlName="cor"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_raca">Raça</label>
+        <select
+          class="custom-select mr-sm-2"
+          id="cadela_raca"
+          name="cadela_raca"
+          required
+          formControlName="raca"
+        >
+          <option selected>Selecione a Raça</option>
+          <option value="Spitz">Spitz</option>
+          <option value="Shitzu">Shitzu</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_status">Status</label>
+        <select
+          class="custom-select mr-sm-2"
+          id="cadela_status"
+          name="cadela_status"
+          required
+          formControlName="status"
+        >
+          <option selected>Status</option>
+          <option value="Filhote">Filhote</option>
+          <option value="Aguardando Cio">Aguardando Cio</option>
+          <!--<option value="Cio">Cio</option>-->
+          <option value="Cruzando">Cruzando</option>
+          <option value="Gravida">Grávida</option>
+          <option value="Com Filhote">Com Filhote</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="cadela_data_nascimento">Data de Nascimento</label>
+        <input
+          type="date"
+          class="form-control"
+          [max]="hoje | date:'yyyy-MM-dd'"
+          id="cadela_data_nascimento"
+          name="cadela_data_nascimento"
+          formControlName="dataNascimento"
+        />
+      </div>
+      <div class="form-group col-sm-6">
+        <button type="button" class="btn btn-primary" (click)="salvar()">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>

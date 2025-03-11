@@ -1,0 +1,144 @@
+
+<span *ngIf="machos.length == 0" class="loader"></span>
+<div class="row">
+  <div class="col-md-3" *ngFor="let macho of  machos;">
+    <div class="card m-2">
+      <h5 class="card-header">{{macho.nome}}</h5>
+      <div class="card-body">
+        <p class="card-text">Canil: {{macho.canilOrigem}}</p>
+        <p class="card-text">Data de Nascimento: {{macho.dataNascimento | date:'dd/MM/yy'}}</p>
+        <p class="card-text">Pai: {{macho.pai}}</p>
+        <p class="card-text">Mãe: {{macho.mae}}</p>
+        <p class="card-text">Cor: {{macho.cor}}</p>
+        <p class="card-text">Raça: {{macho.raca}}</p>
+        <div class="d-flex flex-wrap">
+          <button class="btn btn-danger m-1" type="button" (click)="deletar(macho.id)">Deletar</button>
+          <button class="btn btn-primary m-1" (click)="abrirModalEditar(macho)">Editar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Editar-->
+<div class="modal" tabindex="-1" role="dialog" id="modalEditar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Macho</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <form [formGroup]="formMacho">
+            <div class="form-group row m-2">
+              <input
+                  type="text"
+                  formControlName="id"
+                  hidden
+                />
+                <input
+                  type="text"
+                  formControlName="ativo"
+                  hidden
+                />
+              <div class="form-group col-sm-6">
+                <label for="macho_nome">Nome do Macho</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="macho_nome"
+                  name="macho_nome"
+                  placeholder="Nome do Macho"
+                  required
+                  formControlName="nome"
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="macho_mae">Mãe</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="macho_mae"
+                  name="macho_mae"
+                  placeholder="Mãe"
+                  formControlName="mae"
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="macho_pai">Pai</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="macho_pai"
+                  name="macho_pai"
+                  placeholder="Pai"
+                  formControlName="pai"
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="macho_canil_origem">Canil Origem</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="macho_canil_origem"
+                  name="macho_canil_origem"
+                  placeholder="Nome do Canil de Origem"
+                  formControlName="canilOrigem"
+                />
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <label for="macho_cor">Cor</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="macho_cor"
+                  name="macho_cor"
+                  placeholder="Cor"
+                  formControlName="cor"
+                />
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="macho_raca">Raça</label>
+                <select
+                  class="custom-select mr-sm-2"
+                  id="macho_raca"
+                  name="macho_raca"
+                  required
+                  formControlName="raca"
+                >
+                  <option selected>Selecione a Raça...</option>
+                  <option value="Spitz">Spitz</option>
+                  <option value="Shitzu">Shitzu</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <label for="macho_data_nascimento">Data de Nascimento</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="macho_data_nascimento"
+                  name="macho_data_nascimento"
+                  formControlName="dataNascimento"
+                />
+              </div>
+            </div>
+            <div class="form-group row m-2">
+              <div class="form-group col-sm-6">
+                <button type="button" class="btn btn-primary" (click)="editar()">Salvar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fim Modal Editar-->
+
+
